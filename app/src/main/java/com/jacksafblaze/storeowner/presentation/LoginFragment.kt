@@ -1,14 +1,22 @@
 package com.jacksafblaze.storeowner.presentation
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
+import com.google.android.material.snackbar.Snackbar
 import com.jacksafblaze.storeowner.R
 import com.jacksafblaze.storeowner.databinding.FragmentLoginBinding
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class LoginFragment: Fragment(R.layout.fragment_login) {
@@ -26,6 +34,62 @@ class LoginFragment: Fragment(R.layout.fragment_login) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.email.addTextChangedListener(object: TextWatcher{
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
 
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                viewModel.validateEmail(p0.toString())
+            }
+
+            override fun afterTextChanged(p0: Editable?) {}
+
+        })
+        binding.password.addTextChangedListener(object: TextWatcher{
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                viewModel.validatePassword(p0.toString())
+            }
+
+            override fun afterTextChanged(p0: Editable?) {}
+
+        })
+        bindState()
+        binding.login.setOnClickListener {
+            viewModel.login()
+        }
+        binding.register.setOnClickListener {
+            viewModel.register()
+        }
+    }
+
+    private fun bindState(){
+        viewLifecycleOwner.lifecycleScope.launch{
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED){
+                viewModel.uiState.collectLatest {
+                    if(it.isLoading){
+                        binding.loading.visibility = View.VISIBLE
+                    }
+                    else{
+                        binding.loading.visibility = View.GONE
+                    }
+                    if(it.message != null){
+                        Snackbar.make(requireView(), it.message, Snackbar.LENGTH_LONG).show()
+                        viewModel.userMessageShown()
+                    }
+                    if(it.emailAlert != null){
+                        binding.emailAlert.visibility = View.VISIBLE
+                        binding.emailAlert.text = it.emailAlert
+                    }
+                    else{
+                        binding.emailAlert.visibility = View.GONE
+                    }
+                    if(it.passwordAlert != null){
+                        binding.passwordAlert.visibility = View.GONE
+                        binding.passwordAlert.text = it.passwordAlert
+                    }
+                }
+            }
+        }
     }
 }
