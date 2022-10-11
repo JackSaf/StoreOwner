@@ -27,6 +27,9 @@ class LoginViewModel @Inject constructor(
     }
 
     fun login() = viewModelScope.launch {
+        _uiState.update {
+            it.copy(isLoading = true)
+        }
         val email = _uiState.value.email
         val password = _uiState.value.password
         if (validateEmail(email) && validatePassword(password)) {
@@ -38,9 +41,15 @@ class LoginViewModel @Inject constructor(
                 }
             }
         }
+        _uiState.update {
+            it.copy(isLoading = false)
+        }
     }
 
     fun register() = viewModelScope.launch {
+        _uiState.update {
+            it.copy(isLoading = true)
+        }
         val email = _uiState.value.email
         val password = _uiState.value.password
         if (validateEmail(email) && validatePassword(password)) {
@@ -52,37 +61,46 @@ class LoginViewModel @Inject constructor(
                 }
             }
         }
+        _uiState.update {
+            it.copy(isLoading = false)
+        }
     }
 
-    private fun validateEmail(email: String?): Boolean {
+    fun validateEmail(email: String?): Boolean {
         if (email.isNullOrBlank()) {
             _uiState.update {
-                it.copy(message = "Please enter email")
+                it.copy(emailAlert = "Please enter email address")
             }
             return false
         }
         val regex = "^([a-zA-Z0-9_\\-.]+)@([a-zA-Z0-9_\\-.]+)\\.([a-zA-Z]{2,5})$".toRegex()
         if (!regex.matches(email)) {
             _uiState.update {
-                it.copy(message = "Wrong email")
+                it.copy(emailAlert = "Incorrect email address")
             }
             return false
+        }
+        _uiState.update {
+            it.copy(emailAlert = null)
         }
         return true
     }
 
-    private fun validatePassword(password: String?): Boolean {
+    fun validatePassword(password: String?): Boolean {
         if (password.isNullOrBlank()) {
             _uiState.update {
-                it.copy(message = "Please enter password")
+                it.copy(passwordAlert = "Please enter password")
             }
             return false
         }
         if (password.length < 8) {
             _uiState.update {
-                it.copy(message = "Password must be 8 or more characters long")
+                it.copy(passwordAlert = "Password must be 8 or more characters long")
             }
             return false
+        }
+        _uiState.update {
+            it.copy(passwordAlert = null)
         }
         return true
     }

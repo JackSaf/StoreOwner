@@ -4,5 +4,6 @@ data class LoginUiState(
     val email: String? = null,
     val password: String? = null,
     val isLoading: Boolean = false,
-    val message: String? = null
-)
+    val emailAlert: String? = null,
+    val passwordAlert: String? = null,
+    val message: String? = null)

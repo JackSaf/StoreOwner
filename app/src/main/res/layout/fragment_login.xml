@@ -13,7 +13,7 @@
     tools:context=".presentation.LoginFragment">
 
     <EditText
-        android:id="@+id/username"
+        android:id="@+id/email"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
@@ -27,6 +27,20 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/email_alert"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:textColor="#D51111"
+        android:textSize="16sp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/email"
+        />
 
     <EditText
         android:id="@+id/password"
@@ -44,7 +58,21 @@
         android:selectAllOnFocus="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/username" />
+        app:layout_constraintTop_toBottomOf="@id/email_alert" />
+
+    <TextView
+        android:id="@+id/password_alert"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:textColor="#D51111"
+        android:textSize="16sp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/password"
+        />
 
     <Button
         android:id="@+id/login"
@@ -59,7 +87,7 @@
         android:text="@string/action_login"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/password"
+        app:layout_constraintTop_toBottomOf="@+id/password_alert"
         />
 
     <Button
