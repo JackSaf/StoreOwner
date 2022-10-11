@@ -1,4 +1,4 @@
-package com.jacksafblaze.storeowner.util
+package com.jacksafblaze.storeowner.di.app
 
 import android.app.Application
 import dagger.hilt.android.HiltAndroidApp
