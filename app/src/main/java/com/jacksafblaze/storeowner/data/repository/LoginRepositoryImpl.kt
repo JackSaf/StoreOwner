@@ -11,15 +11,17 @@ class LoginRepositoryImpl(private val firebaseAuth: FirebaseAuth): LoginReposito
 
     override suspend fun login(email: String, password: String): Boolean {
         return withContext(Dispatchers.IO){
-            firebaseAuth.signInWithEmailAndPassword(email, password).await()
-            true
+            val result = firebaseAuth.signInWithEmailAndPassword(email, password)
+            result.await()
+            result.isSuccessful
         }
     }
 
     override suspend fun register(email: String, password: String): Boolean {
         return withContext(Dispatchers.IO) {
-            firebaseAuth.createUserWithEmailAndPassword(email, password).await()
-            true
+            val result = firebaseAuth.createUserWithEmailAndPassword(email, password)
+            result.await()
+            result.isSuccessful
         }
     }
 
