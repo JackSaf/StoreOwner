@@ -18,9 +18,10 @@ class LoginRepositoryImpl(private val firebaseAuth: FirebaseAuth): LoginReposito
 
     override suspend fun sendVerificationEmail(): Boolean{
         return withContext(Dispatchers.IO){
-            if(isUserLoggedIn()){
-                firebaseAuth.currentUser?.sendEmailVerification()?.await()
-                true
+            if(firebaseAuth.currentUser != null) {
+                val result = firebaseAuth.currentUser!!.sendEmailVerification()
+                result.await()
+                result.isSuccessful
             }
             else{
                 false
