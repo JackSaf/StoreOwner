@@ -38,20 +38,21 @@ class LoginFragment: Fragment(R.layout.fragment_login) {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                viewModel.validateEmail(p0.toString())
             }
 
-            override fun afterTextChanged(p0: Editable?) {}
+            override fun afterTextChanged(p0: Editable?) {
+                viewModel.validateEmail(p0.toString())
+            }
 
         })
         binding.password.addTextChangedListener(object: TextWatcher{
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
 
-            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+
+            override fun afterTextChanged(p0: Editable?) {
                 viewModel.validatePassword(p0.toString())
             }
-
-            override fun afterTextChanged(p0: Editable?) {}
 
         })
         bindState()
@@ -81,15 +82,25 @@ class LoginFragment: Fragment(R.layout.fragment_login) {
                         binding.emailAlert.visibility = View.VISIBLE
                         binding.emailAlert.text = it.emailAlert
                     }
-                    else{
+                    else if(it.isEmailOk){
                         binding.emailAlert.visibility = View.GONE
                     }
                     if(it.passwordAlert != null){
-                        binding.passwordAlert.visibility = View.GONE
+                        binding.passwordAlert.visibility = View.VISIBLE
                         binding.passwordAlert.text = it.passwordAlert
                     }
+                    else if(it.isPasswordOk){
+                        binding.passwordAlert.visibility = View.GONE
+                    }
+                    binding.login.isEnabled = it.buttonsEnabled
+                    binding.register.isEnabled = it.buttonsEnabled
                 }
             }
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
     }
 }
