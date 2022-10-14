@@ -4,9 +4,11 @@ import com.jacksafblaze.storeowner.domain.repository.LoginRepository
 import com.jacksafblaze.storeowner.domain.usecase.CheckIfLoggedInUseCase
 import com.jacksafblaze.storeowner.domain.usecase.LoginUseCase
 import com.jacksafblaze.storeowner.domain.usecase.RegisterUseCase
+import com.jacksafblaze.storeowner.domain.usecase.SendVerificationEmailUseCase
 import com.jacksafblaze.storeowner.domain.usecaseimpl.CheckIfLoggedInUseCaseImpl
 import com.jacksafblaze.storeowner.domain.usecaseimpl.LoginUseCaseImpl
 import com.jacksafblaze.storeowner.domain.usecaseimpl.RegisterUseCaseImpl
+import com.jacksafblaze.storeowner.domain.usecaseimpl.SendVerificationEmailUseCaseImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -32,7 +34,7 @@ class UseCaseModule {
     }
 
     @Provides
-    fun provideSendVerificationEmailUseCase(repository: LoginRepository): SendVerificationEmailUseCase{
+    fun provideSendVerificationEmailUseCase(repository: LoginRepository): SendVerificationEmailUseCase {
         return SendVerificationEmailUseCaseImpl(repository)
     }
 
