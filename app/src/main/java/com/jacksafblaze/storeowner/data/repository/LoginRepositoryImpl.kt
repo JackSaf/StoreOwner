@@ -17,6 +17,18 @@ class LoginRepositoryImpl(private val firebaseAuth: FirebaseAuth): LoginReposito
         }
     }
 
+    override suspend fun sendVerificationEmail(): Boolean{
+        return withContext(Dispatchers.IO){
+            if(firebaseAuth.currentUser != null) {
+                val result = firebaseAuth.currentUser!!.sendEmailVerification()
+                result.await()
+                result.isSuccessful
+            }
+            else{
+                false
+            }
+        }
+    }
     override suspend fun register(email: String, password: String): Boolean {
         return withContext(Dispatchers.IO) {
             val result = firebaseAuth.createUserWithEmailAndPassword(email, password)

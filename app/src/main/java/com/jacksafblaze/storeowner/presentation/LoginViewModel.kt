@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.jacksafblaze.storeowner.domain.usecase.CheckIfLoggedInUseCase
 import com.jacksafblaze.storeowner.domain.usecase.LoginUseCase
 import com.jacksafblaze.storeowner.domain.usecase.RegisterUseCase
+import com.jacksafblaze.storeowner.domain.usecase.SendVerificationEmailUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -16,6 +17,7 @@ import kotlinx.coroutines.launch
 class LoginViewModel @Inject constructor(
     private val loginUseCase: LoginUseCase,
     private val registerUseCase: RegisterUseCase,
+    private val sendVerificationEmailUseCase: SendVerificationEmailUseCase,
     private val checkIfLoggedInUseCase: CheckIfLoggedInUseCase
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(LoginUiState())
