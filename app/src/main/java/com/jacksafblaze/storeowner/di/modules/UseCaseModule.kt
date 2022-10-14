@@ -31,4 +31,9 @@ class UseCaseModule {
         return CheckIfLoggedInUseCaseImpl(repository)
     }
 
+    @Provides
+    fun provideSendVerificationEmailUseCase(repository: LoginRepository): SendVerificationEmailUseCase{
+        return SendVerificationEmailUseCaseImpl(repository)
+    }
+
 }
