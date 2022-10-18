@@ -11,6 +11,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import com.jacksafblaze.storeowner.R
 import com.jacksafblaze.storeowner.databinding.FragmentLoginBinding
@@ -93,7 +94,8 @@ class LoginFragment: Fragment(R.layout.fragment_login) {
                         binding.passwordAlert.visibility = View.GONE
                     }
                     if(it.isLoggedIn && it.isVerified){
-
+                        val action = LoginFragmentDirections.actionLoginFragmentToHomeFragment()
+                        findNavController().navigate(action)
                     }
                     binding.login.isEnabled = it.buttonsEnabled
                     binding.register.isEnabled = it.buttonsEnabled
