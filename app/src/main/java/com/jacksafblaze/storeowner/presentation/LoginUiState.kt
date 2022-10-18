@@ -8,6 +8,8 @@ data class LoginUiState(
     val isPasswordOk: Boolean = false,
     val emailAlert: String? = null,
     val passwordAlert: String? = null,
+    val isLoggedIn: Boolean = false,
+    val isVerified: Boolean = false,
     val message: String? = null){
     val buttonsEnabled get() = isEmailOk && isPasswordOk
 }
