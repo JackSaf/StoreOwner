@@ -53,7 +53,12 @@ class LoginViewModel @Inject constructor(
         val email = _uiState.value.email
         val password = _uiState.value.password
         try {
-            loginUseCase.execute(email!!, password!!)
+            if(loginUseCase.execute(email!!, password!!)){
+                if(!_uiState.value.isVerified){
+                    sendVerificationEmail()
+                    logout()
+                }
+            }
         } catch (e: Exception) {
             _uiState.update {
                 it.copy(message = "${e.message}")
@@ -71,7 +76,10 @@ class LoginViewModel @Inject constructor(
         val email = _uiState.value.email
         val password = _uiState.value.password
         try {
-            registerUseCase.execute(email!!, password!!)
+            if(registerUseCase.execute(email!!, password!!)){
+                sendVerificationEmail()
+                logout()
+            }
         } catch (e: Exception) {
             _uiState.update {
                 it.copy(message = "${e.message}")
@@ -117,7 +125,7 @@ class LoginViewModel @Inject constructor(
         }
     }
 
-    fun sendVerificationEmail() = viewModelScope.launch{
+    private fun sendVerificationEmail() = viewModelScope.launch{
         if(sendVerificationEmailUseCase.execute()) {
             _uiState.update {
                 it.copy(message = "Verification email was sent to ${_uiState.value.email}")
@@ -125,7 +133,7 @@ class LoginViewModel @Inject constructor(
         }
     }
 
-    fun logout(){
+    private fun logout(){
         logoutUseCase.execute()
     }
 }
