@@ -1,4 +1,4 @@
-package com.jacksafblaze.storeowner.presentation
+package com.jacksafblaze.storeowner.presentation.login
 
 data class LoginUiState(
     val email: String? = null,

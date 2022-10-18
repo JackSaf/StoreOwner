@@ -1,4 +1,4 @@
-package com.jacksafblaze.storeowner.presentation
+package com.jacksafblaze.storeowner.presentation.login
 
 import android.os.Bundle
 import android.text.Editable
