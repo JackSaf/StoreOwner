@@ -92,6 +92,9 @@ class LoginFragment: Fragment(R.layout.fragment_login) {
                     else if(it.isPasswordOk){
                         binding.passwordAlert.visibility = View.GONE
                     }
+                    if(it.isLoggedIn && it.isVerified){
+
+                    }
                     binding.login.isEnabled = it.buttonsEnabled
                     binding.register.isEnabled = it.buttonsEnabled
                 }
