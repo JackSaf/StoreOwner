@@ -1,14 +1,8 @@
 package com.jacksafblaze.storeowner.di.modules
 
 import com.jacksafblaze.storeowner.domain.repository.LoginRepository
-import com.jacksafblaze.storeowner.domain.usecase.CheckIfLoggedInUseCase
-import com.jacksafblaze.storeowner.domain.usecase.LoginUseCase
-import com.jacksafblaze.storeowner.domain.usecase.RegisterUseCase
-import com.jacksafblaze.storeowner.domain.usecase.SendVerificationEmailUseCase
-import com.jacksafblaze.storeowner.domain.usecaseimpl.CheckIfLoggedInUseCaseImpl
-import com.jacksafblaze.storeowner.domain.usecaseimpl.LoginUseCaseImpl
-import com.jacksafblaze.storeowner.domain.usecaseimpl.RegisterUseCaseImpl
-import com.jacksafblaze.storeowner.domain.usecaseimpl.SendVerificationEmailUseCaseImpl
+import com.jacksafblaze.storeowner.domain.usecase.*
+import com.jacksafblaze.storeowner.domain.usecaseimpl.*
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -29,8 +23,8 @@ class UseCaseModule {
     }
 
     @Provides
-    fun provideCheckIfLoggedInUseCase(repository: LoginRepository): CheckIfLoggedInUseCase{
-        return CheckIfLoggedInUseCaseImpl(repository)
+    fun provideCheckIfLoggedInUseCase(repository: LoginRepository): CheckIfUserLoggedInUseCase {
+        return CheckIfUserLoggedInUseCaseImpl(repository)
     }
 
     @Provides
@@ -38,4 +32,13 @@ class UseCaseModule {
         return SendVerificationEmailUseCaseImpl(repository)
     }
 
+    @Provides
+    fun provideLogoutUseCase(repository: LoginRepository): LogoutUseCase{
+        return LogoutUseCaseImpl(repository)
+    }
+
+    @Provides
+    fun provideCheckIfUserVerifiedUseCase(repository: LoginRepository): CheckIfUserVerifiedUseCase{
+        return CheckIfUserVerifiedUseCaseImpl(repository)
+    }
 }
