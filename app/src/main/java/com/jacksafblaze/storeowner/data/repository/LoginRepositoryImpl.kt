@@ -12,16 +12,12 @@ import kotlinx.coroutines.withContext
 
 class LoginRepositoryImpl(private val firebaseAuth: FirebaseAuth): LoginRepository {
 
-    override fun isUserLoggedIn(): Flow<Boolean> = callbackFlow{
-        val listener = AuthStateListener { trySend(firebaseAuth.currentUser != null) }
-        firebaseAuth.addAuthStateListener(listener)
-        awaitClose { firebaseAuth.removeAuthStateListener(listener) }
+    override fun isUserLoggedIn(): Boolean{
+        return firebaseAuth.currentUser != null
     }
 
-    override fun isUserVerified(): Flow<Boolean> = callbackFlow {
-        val listener = AuthStateListener { trySend(firebaseAuth.currentUser?.isEmailVerified ?: false) }
-        firebaseAuth.addAuthStateListener(listener)
-        awaitClose { firebaseAuth.removeAuthStateListener(listener) }
+    override fun isUserVerified(): Boolean{
+        return firebaseAuth.currentUser?.isEmailVerified ?: false
     }
 
     override suspend fun login(email: String, password: String): Boolean {
