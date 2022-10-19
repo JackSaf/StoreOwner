@@ -22,24 +22,6 @@ class LoginViewModel @Inject constructor(
     private val _uiState = MutableStateFlow(LoginUiState())
     val uiState = _uiState.asStateFlow()
 
-    init {
-        isUserLoggedIn()
-        isUserVerified()
-    }
-    private fun isUserLoggedIn() = viewModelScope.launch {
-        checkIfUserLoggedInUseCase.execute().collect{ loggedIn ->
-            _uiState.update {
-                it.copy(isLoggedIn = loggedIn)
-            }
-        }
-    }
-    private fun isUserVerified() = viewModelScope.launch {
-        checkIfUserVerifiedUseCase.execute().collect{ verified ->
-            _uiState.update {
-                it.copy(isVerified = verified)
-            }
-        }
-    }
     fun userMessageShown() {
         _uiState.update {
             it.copy(message = null)
@@ -53,8 +35,17 @@ class LoginViewModel @Inject constructor(
         val email = _uiState.value.email
         val password = _uiState.value.password
         try {
-            if(loginUseCase.execute(email!!, password!!)){
-                if(!_uiState.value.isVerified){
+            loginUseCase.execute(email!!, password!!)
+            if(checkIfUserLoggedInUseCase.execute()){
+                _uiState.update {
+                    it.copy(isLoggedIn = true)
+                }
+                if(checkIfUserVerifiedUseCase.execute()){
+                    _uiState.update {
+                        it.copy(isVerified = true)
+                    }
+                }
+                else{
                     sendVerificationEmail()
                     logout()
                 }
@@ -76,7 +67,11 @@ class LoginViewModel @Inject constructor(
         val email = _uiState.value.email
         val password = _uiState.value.password
         try {
-            if(registerUseCase.execute(email!!, password!!)){
+            registerUseCase.execute(email!!, password!!)
+            if(checkIfUserLoggedInUseCase.execute()){
+                _uiState.update {
+                    it.copy(isLoggedIn = true)
+                }
                 sendVerificationEmail()
                 logout()
             }
@@ -125,7 +120,7 @@ class LoginViewModel @Inject constructor(
         }
     }
 
-    private fun sendVerificationEmail() = viewModelScope.launch{
+    private suspend fun sendVerificationEmail(){
         if(sendVerificationEmailUseCase.execute()) {
             _uiState.update {
                 it.copy(message = "Verification email was sent to ${_uiState.value.email}")
@@ -135,5 +130,8 @@ class LoginViewModel @Inject constructor(
 
     private fun logout(){
         logoutUseCase.execute()
+        _uiState.update {
+            it.copy(isLoggedIn = false)
+        }
     }
 }
