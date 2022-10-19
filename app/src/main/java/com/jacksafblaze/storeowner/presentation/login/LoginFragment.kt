@@ -94,8 +94,11 @@ class LoginFragment: Fragment(R.layout.fragment_login) {
                         binding.passwordAlert.visibility = View.GONE
                     }
                     if(it.isLoggedIn && it.isVerified){
-                        val action = LoginFragmentDirections.actionLoginFragmentToHomeFragment()
-                        findNavController().navigate(action)
+                        val navController = findNavController()
+                        if(navController.currentDestination?.id == R.id.loginFragment) {
+                            val action = LoginFragmentDirections.actionLoginFragmentToHomeFragment()
+                            findNavController().navigate(action)
+                        }
                     }
                     binding.login.isEnabled = it.buttonsEnabled
                     binding.register.isEnabled = it.buttonsEnabled
