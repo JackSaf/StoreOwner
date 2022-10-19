@@ -5,7 +5,7 @@ import com.jacksafblaze.storeowner.domain.usecase.CheckIfUserLoggedInUseCase
 import kotlinx.coroutines.flow.Flow
 
 class CheckIfUserLoggedInUseCaseImpl(private val repository: LoginRepository) : CheckIfUserLoggedInUseCase {
-    override fun execute(): Flow<Boolean> {
+    override fun execute(): Boolean {
         return repository.isUserLoggedIn()
     }
 }

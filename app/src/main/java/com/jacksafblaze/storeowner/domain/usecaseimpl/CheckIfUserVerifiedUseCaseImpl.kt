@@ -5,7 +5,7 @@ import com.jacksafblaze.storeowner.domain.usecase.CheckIfUserVerifiedUseCase
 import kotlinx.coroutines.flow.Flow
 
 class CheckIfUserVerifiedUseCaseImpl(private val repository: LoginRepository): CheckIfUserVerifiedUseCase {
-    override fun execute(): Flow<Boolean> {
+    override fun execute(): Boolean {
         return repository.isUserVerified()
     }
 }
