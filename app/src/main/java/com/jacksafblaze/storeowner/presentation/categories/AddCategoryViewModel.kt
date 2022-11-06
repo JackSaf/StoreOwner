@@ -37,7 +37,7 @@ class AddCategoryViewModel(private val addCategoryUseCase: AddCategoryUseCase) :
         }
     }
     fun addCategory() = viewModelScope.launch{
-        val category = Category(name = uiState.value.name!!, imageUrl = uiState.value.imageUri.toString())
+        val category = Category(name = uiState.value.name!!, imageUri = uiState.value.imageUri.toString())
         _uiState.update {
             it.copy(isLoading = true)
         }
