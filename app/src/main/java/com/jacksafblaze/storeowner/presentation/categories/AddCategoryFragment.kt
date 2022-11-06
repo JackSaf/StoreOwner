@@ -13,9 +13,12 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
+import com.jacksafblaze.storeowner.R
 import com.jacksafblaze.storeowner.databinding.FragmentAddCategoryBinding
+import com.jacksafblaze.storeowner.presentation.login.LoginFragmentDirections
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -57,7 +60,7 @@ class AddCategoryFragment : Fragment() {
             viewModel.addCategory()
         }
         binding.cancel.setOnClickListener {
-
+            findNavController().navigateUp()
         }
     }
 
@@ -69,7 +72,10 @@ class AddCategoryFragment : Fragment() {
                         Glide.with(requireView()).load(state.imageUri).into(binding.image)
                     }
                     if(state.isCategoryAdded){
-
+                        val navController = findNavController()
+                        if(navController.currentDestination?.id == R.id.addCategoryFragment) {
+                            findNavController().navigateUp()
+                        }
                     }
                     if(!state.message.isNullOrBlank()){
                         Snackbar.make(requireView(), state.message, Snackbar.LENGTH_LONG).show()

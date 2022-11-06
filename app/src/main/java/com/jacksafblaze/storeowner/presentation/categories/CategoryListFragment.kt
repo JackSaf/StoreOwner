@@ -9,6 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.jacksafblaze.storeowner.R
@@ -35,6 +36,11 @@ class CategoryListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setupRecyclerView()
         bindState()
+        binding.addCategoryFab.setOnClickListener{
+            val navController = findNavController()
+            val action = CategoryListFragmentDirections.actionCategoryListFragmentToAddCategoryFragment()
+            navController.navigate(action)
+        }
     }
 
     private fun bindState(){
