@@ -10,7 +10,7 @@ import dagger.hilt.android.components.ViewModelComponent
 
 @Module
 @InstallIn(ViewModelComponent::class)
-class UseCaseModule {
+class LoginUseCaseModule {
 
     @Provides
     fun provideLoginUseCase(repository: LoginRepository): LoginUseCase {
