@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:padding="10dp"
+    tools:context=".presentation.products.AddProductFragment">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_margin="10dp"
+        android:layout_height="200dp">
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/add_image_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|bottom"
+            app:icon="@drawable/ic_baseline_add_photo_24"
+            />
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/image"
+            style="@style/roundedCorners"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/image_placeholder" />
+    </FrameLayout>
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:hint="@string/product_name"
+        android:layout_margin="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/name"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:orientation="horizontal">
+        <com.google.android.material.textfield.TextInputLayout
+            android:hint="@string/product_cost"
+            android:layout_margin="10dp"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/cost"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:hint="@string/product_price"
+            android:layout_margin="10dp"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/price"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:hint="@string/product_unit"
+            android:layout_margin="10dp"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent">
+
+            <AutoCompleteTextView
+                android:id="@+id/unit"
+                app:simpleItems="@array/unit_array"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/add"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_margin="10dp"
+            android:text="@string/add_button_text"
+            />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/cancel"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_margin="10dp"
+            android:text="@string/cancel_button_text"
+            />
+    </LinearLayout>
+
+
+</LinearLayout>
