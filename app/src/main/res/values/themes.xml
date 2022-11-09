@@ -8,9 +8,9 @@
         <!-- Secondary brand color. -->
         <item name="colorSecondary">#b2ebf2</item>
         <item name="colorSecondaryVariant">#e5ffff</item>
-        <item name="colorOnSecondary">#00838f</item>
+        <item name="colorOnSecondary">#e5ffff</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
         <!-- Customize your theme here. -->
     </style>
     <style name="roundedCorners" parent="">

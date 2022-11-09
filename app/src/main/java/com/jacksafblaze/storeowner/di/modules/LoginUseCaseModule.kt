@@ -2,7 +2,9 @@ package com.jacksafblaze.storeowner.di.modules
 
 import com.jacksafblaze.storeowner.domain.repository.LoginRepository
 import com.jacksafblaze.storeowner.domain.usecase.*
+import com.jacksafblaze.storeowner.domain.usecase.login.*
 import com.jacksafblaze.storeowner.domain.usecaseimpl.*
+import com.jacksafblaze.storeowner.domain.usecaseimpl.login.*
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -18,7 +20,7 @@ class LoginUseCaseModule {
     }
 
     @Provides
-    fun provideRegisterUseCase(repository: LoginRepository): RegisterUseCase{
+    fun provideRegisterUseCase(repository: LoginRepository): RegisterUseCase {
         return RegisterUseCaseImpl(repository)
     }
 
@@ -33,12 +35,12 @@ class LoginUseCaseModule {
     }
 
     @Provides
-    fun provideLogoutUseCase(repository: LoginRepository): LogoutUseCase{
+    fun provideLogoutUseCase(repository: LoginRepository): LogoutUseCase {
         return LogoutUseCaseImpl(repository)
     }
 
     @Provides
-    fun provideCheckIfUserVerifiedUseCase(repository: LoginRepository): CheckIfUserVerifiedUseCase{
+    fun provideCheckIfUserVerifiedUseCase(repository: LoginRepository): CheckIfUserVerifiedUseCase {
         return CheckIfUserVerifiedUseCaseImpl(repository)
     }
 }

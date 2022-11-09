@@ -2,7 +2,7 @@ package com.jacksafblaze.storeowner.presentation.products
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.jacksafblaze.storeowner.domain.usecase.ViewProductsFromCategoryUseCase
+import com.jacksafblaze.storeowner.domain.usecase.products.ViewProductsFromCategoryUseCase
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow

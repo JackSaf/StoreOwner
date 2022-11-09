@@ -1,7 +1,7 @@
 package com.jacksafblaze.storeowner.presentation.products
 
 import androidx.lifecycle.ViewModel
-import com.jacksafblaze.storeowner.domain.usecase.AddProductToCategoryUseCase
+import com.jacksafblaze.storeowner.domain.usecase.products.AddProductToCategoryUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 

@@ -4,7 +4,7 @@ import android.net.Uri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.jacksafblaze.storeowner.domain.model.Category
-import com.jacksafblaze.storeowner.domain.usecase.AddCategoryUseCase
+import com.jacksafblaze.storeowner.domain.usecase.categories.AddCategoryUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update

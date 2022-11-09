@@ -2,7 +2,7 @@ package com.jacksafblaze.storeowner.presentation.categories
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.jacksafblaze.storeowner.domain.usecase.ViewCategoriesUseCase
+import com.jacksafblaze.storeowner.domain.usecase.categories.ViewCategoriesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
