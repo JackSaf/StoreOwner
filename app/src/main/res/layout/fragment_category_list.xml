@@ -6,16 +6,26 @@
     tools:context=".presentation.categories.CategoryListFragment">
     <TextView
         android:id="@+id/no_categories"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/no_categories_message"
         android:textSize="20sp"
+        android:visibility="gone"
+        android:layout_gravity="center"
+        android:textColor="@color/black"
+        />
+    <ProgressBar
+        android:id="@+id/categories_progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:visibility="gone"
         />
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/category_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_margin="10dp"
         />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton

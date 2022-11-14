@@ -19,10 +19,11 @@ import com.google.android.material.snackbar.Snackbar
 import com.jacksafblaze.storeowner.R
 import com.jacksafblaze.storeowner.databinding.FragmentAddCategoryBinding
 import com.jacksafblaze.storeowner.presentation.login.LoginFragmentDirections
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
-
+@AndroidEntryPoint
 class AddCategoryFragment : Fragment() {
     val viewModel: AddCategoryViewModel by viewModels()
     private var _binding: FragmentAddCategoryBinding? = null
@@ -81,13 +82,8 @@ class AddCategoryFragment : Fragment() {
                         Snackbar.make(requireView(), state.message, Snackbar.LENGTH_LONG).show()
                         viewModel.userMessageShown()
                     }
-                    if(state.isNameOk){
-                        binding.nameAlert.visibility = View.GONE
-                    }
-                    else{
-                        binding.nameAlert.visibility = View.VISIBLE
-                        binding.nameAlert.text = state.nameAlert
-                    }
+                    binding.nameInputLayout.error = state.nameAlert
+                    binding.nameInputLayout.isErrorEnabled = !state.nameAlert.isNullOrBlank()
                     binding.add.isEnabled = state.isAddButtonEnabled
                 }
             }

@@ -1,20 +1,19 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.StoreOwner" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="Theme.StoreOwner" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">#00bcd4</item>
-        <item name="colorPrimaryVariant">#62EFFF</item>
-        <item name="colorOnPrimary">#008ba3</item>
+        <item name="colorPrimary">#80cbc4</item>
+        <item name="colorPrimaryVariant">#b2fef7</item>
+        <item name="colorOnPrimary">#000000</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">#b2ebf2</item>
-        <item name="colorSecondaryVariant">#e5ffff</item>
-        <item name="colorOnSecondary">#e5ffff</item>
+        <item name="colorSecondary">#a5d6a7</item>
+        <item name="colorSecondaryVariant">#d7ffd9</item>
+        <item name="colorOnSecondary">#000000</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor">@android:color/transparent</item>
+<!--        <item name="android:statusBarColor">@android:color/transparent</item>-->
         <!-- Customize your theme here. -->
     </style>
     <style name="roundedCorners" parent="">
-        <item name="cornerFamily">rounded</item>
         <item name="cornerSize">100dp</item>
     </style>
 </resources>

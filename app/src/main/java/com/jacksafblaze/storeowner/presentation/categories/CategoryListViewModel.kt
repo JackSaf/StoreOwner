@@ -27,32 +27,25 @@ class CategoryListViewModel @Inject constructor(
     private fun viewCategories() {
         job?.cancel()
         job = viewModelScope.launch {
-            _uiState.update {uiState ->
+            _uiState.update { uiState ->
                 uiState.copy(isLoading = true)
             }
             try {
-                viewCategoriesUseCase.execute().collectLatest {categories ->
-                    _uiState.update {uiState ->
-                        uiState.copy(categories = categories)
+                viewCategoriesUseCase.execute().collectLatest { categories ->
+                    _uiState.update { uiState ->
+                        uiState.copy(categories = categories, isLoading = false)
                     }
                 }
-            }
-            catch (e: Exception){
-                _uiState.update {uiState ->
-                    uiState.copy(message = e.message)
+            } catch (e: Exception) {
+                _uiState.update { uiState ->
+                    uiState.copy(message = e.message, isLoading = false)
                 }
             }
-            finally {
-                _uiState.update {uiState ->
-                    uiState.copy(isLoading = false)
-                }
-            }
-
         }
     }
 
-    fun userMessageShown(){
-        _uiState.update {uiState ->
+    fun userMessageShown() {
+        _uiState.update { uiState ->
             uiState.copy(message = null)
         }
     }

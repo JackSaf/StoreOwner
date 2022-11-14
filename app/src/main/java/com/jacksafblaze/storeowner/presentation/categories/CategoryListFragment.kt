@@ -9,15 +9,17 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.jacksafblaze.storeowner.R
 import com.jacksafblaze.storeowner.databinding.FragmentCategoryListBinding
-import kotlinx.coroutines.flow.collectLatest
+import com.jacksafblaze.storeowner.presentation.ToolbarTitleSetter
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
-
+@AndroidEntryPoint
 class CategoryListFragment : Fragment() {
     val viewModel: CategoryListViewModel by viewModels()
     private lateinit var adapter: CategoryAdapter
@@ -34,35 +36,32 @@ class CategoryListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        changeToolbarTitle()
+        setupFab()
         setupRecyclerView()
         bindState()
-        binding.addCategoryFab.setOnClickListener{
-            val navController = findNavController()
-            val action = CategoryListFragmentDirections.actionCategoryListFragmentToAddCategoryFragment()
-            navController.navigate(action)
-        }
     }
 
     private fun bindState(){
         viewLifecycleOwner.lifecycleScope.launch{
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED){
-                viewModel.uiState.collectLatest { state ->
+                viewModel.uiState.collect { state ->
                     if(state.isLoading){
                         showProgressBar()
                     }
                     else{
                         hideProgressBar()
                     }
-                    if(state.message != null){
-                        Snackbar.make(requireView(), state.message, Snackbar.LENGTH_LONG).show()
-                        viewModel.userMessageShown()
-                    }
                     if(state.categories.isNotEmpty()){
-                        binding.noCategories.visibility = View.GONE
+                        hideNoCategoriesText()
                         adapter.setList(state.categories)
                     }
                     else{
-                        binding.noCategories.visibility = View.VISIBLE
+                        showNoCategoriesText()
+                    }
+                    if(state.message != null){
+                        Snackbar.make(requireView(), state.message, Snackbar.LENGTH_LONG).show()
+                        viewModel.userMessageShown()
                     }
                 }
             }
@@ -70,16 +69,41 @@ class CategoryListFragment : Fragment() {
     }
 
     private fun setupRecyclerView(){
-        adapter = CategoryAdapter()
+        adapter = CategoryAdapter{categoryId, categoryName ->
+            val navController = findNavController()
+            if(navController.currentDestination?.id == R.id.categoryListFragment){
+                val action = CategoryListFragmentDirections.actionCategoryListFragmentToProductListFragment(categoryId, categoryName)
+                navController.navigate(action)
+            }
+        }
         binding.categoryList.adapter = adapter
         binding.categoryList.layoutManager = LinearLayoutManager(requireContext())
     }
-
+    private fun setupFab(){
+        binding.addCategoryFab.setOnClickListener{
+            val navController = findNavController()
+            if(navController.currentDestination?.id == R.id.categoryListFragment) {
+                val action =
+                    CategoryListFragmentDirections.actionCategoryListFragmentToAddCategoryFragment()
+                navController.navigate(action)
+            }
+        }
+    }
+    private fun changeToolbarTitle(){
+        val navHostFragment = parentFragment as NavHostFragment
+        (navHostFragment.parentFragment as ToolbarTitleSetter).setTitle("Categories")
+    }
+    private fun showNoCategoriesText(){
+        binding.noCategories.visibility = View.VISIBLE
+    }
+    private fun hideNoCategoriesText(){
+        binding.noCategories.visibility = View.GONE
+    }
     private fun showProgressBar(){
-
+        binding.categoriesProgressBar.visibility = View.VISIBLE
     }
     private fun hideProgressBar(){
-
+        binding.categoriesProgressBar.visibility = View.GONE
     }
     override fun onDestroy() {
         _binding = null

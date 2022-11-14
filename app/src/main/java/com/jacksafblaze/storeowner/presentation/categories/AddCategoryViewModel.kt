@@ -5,24 +5,27 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.jacksafblaze.storeowner.domain.model.Category
 import com.jacksafblaze.storeowner.domain.usecase.categories.AddCategoryUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class AddCategoryViewModel(private val addCategoryUseCase: AddCategoryUseCase) : ViewModel() {
+@HiltViewModel
+class AddCategoryViewModel @Inject constructor(private val addCategoryUseCase: AddCategoryUseCase) : ViewModel() {
     private val _uiState = MutableStateFlow(AddCategoryUiState())
     val uiState = _uiState.asStateFlow()
 
     fun setName(name: String?){
         if(name.isNullOrBlank()){
             _uiState.update {
-                it.copy(isNameOk = false, nameAlert = "Please enter the name")
+                it.copy(nameAlert = "Please enter the name")
             }
         }
         else{
             _uiState.update {
-                it.copy(isNameOk = true, nameAlert = null)
+                it.copy(name = name, nameAlert = null)
             }
         }
     }

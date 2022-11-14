@@ -24,4 +24,7 @@
     <string name="category_name">Name</string>
     <string name="no_categories_message">No categories yet</string>
     <string name="categories">Categories</string>
+    <string name="no_products_message">No products yet</string>
+    <string name="unit_hint">Unit</string>
+    <string name="header_title">Store Owner</string>
 </resources>

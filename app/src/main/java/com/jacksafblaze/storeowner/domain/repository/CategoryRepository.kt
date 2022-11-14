@@ -10,5 +10,4 @@ interface CategoryRepository {
     fun getCategories(): Flow<List<Category>>
     suspend fun deleteCategory(category: Category): Boolean
     suspend fun updateCategory(category: Category): Boolean
-    suspend fun uploadCategoryImage(imageUri: Uri): String
 }

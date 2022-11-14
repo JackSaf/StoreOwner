@@ -35,27 +35,8 @@ class LoginFragment: Fragment(R.layout.fragment_login) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.email.addTextChangedListener(object: TextWatcher{
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
-
-            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-            }
-
-            override fun afterTextChanged(p0: Editable?) {
-                viewModel.validateEmail(p0.toString())
-            }
-
-        })
-        binding.password.addTextChangedListener(object: TextWatcher{
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
-
-            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
-
-            override fun afterTextChanged(p0: Editable?) {
-                viewModel.validatePassword(p0.toString())
-            }
-
-        })
+        setupEmailEditText()
+        setupPasswordEditText()
         bindState()
         binding.login.setOnClickListener {
             viewModel.login()
@@ -79,32 +60,49 @@ class LoginFragment: Fragment(R.layout.fragment_login) {
                         Snackbar.make(requireView(), it.message, Snackbar.LENGTH_LONG).show()
                         viewModel.userMessageShown()
                     }
-                    if(it.emailAlert != null){
-                        binding.emailAlert.visibility = View.VISIBLE
-                        binding.emailAlert.text = it.emailAlert
-                    }
-                    else if(it.isEmailOk){
-                        binding.emailAlert.visibility = View.GONE
-                    }
-                    if(it.passwordAlert != null){
-                        binding.passwordAlert.visibility = View.VISIBLE
-                        binding.passwordAlert.text = it.passwordAlert
-                    }
-                    else if(it.isPasswordOk){
-                        binding.passwordAlert.visibility = View.GONE
-                    }
                     if(it.isLoggedIn && it.isVerified){
                         val navController = findNavController()
                         if(navController.currentDestination?.id == R.id.loginFragment) {
-                            val action = LoginFragmentDirections.actionLoginFragmentToHomeFragment()
+                            val action = LoginFragmentDirections.actionLoginFragmentToHomeFragment(viewModel.uiState.value.email!!)
                             findNavController().navigate(action)
                         }
                     }
                     binding.login.isEnabled = it.buttonsEnabled
                     binding.register.isEnabled = it.buttonsEnabled
+                    binding.emailInputLayout.error = it.emailAlert
+                    binding.emailInputLayout.isErrorEnabled = !it.emailAlert.isNullOrBlank()
+                    binding.passwordInputLayout.error = it.passwordAlert
+                    binding.passwordInputLayout.isErrorEnabled = !it.passwordAlert.isNullOrBlank()
                 }
             }
         }
+    }
+
+    private fun setupEmailEditText(){
+        binding.email.addTextChangedListener(object: TextWatcher{
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+                viewModel.validateEmail(p0.toString())
+            }
+
+        })
+    }
+
+    private fun setupPasswordEditText(){
+        binding.password.addTextChangedListener(object: TextWatcher{
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+
+            override fun afterTextChanged(p0: Editable?) {
+                viewModel.validatePassword(p0.toString())
+            }
+
+        })
     }
 
     override fun onDestroy() {

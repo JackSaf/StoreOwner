@@ -9,6 +9,4 @@ interface ProductRepository {
     fun getProducts(categoryId: String): Flow<List<Product>>
     suspend fun deleteProduct(product: Product, categoryId: String): Boolean
     suspend fun updateProduct(product: Product, categoryId: String): Boolean
-    suspend fun uploadProductImage(imageUri: Uri): String
-
 }

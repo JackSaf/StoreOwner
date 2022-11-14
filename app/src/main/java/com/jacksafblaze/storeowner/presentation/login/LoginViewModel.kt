@@ -89,7 +89,7 @@ class LoginViewModel @Inject constructor(
         val regex = "^([a-zA-Z0-9_\\-.]+)@([a-zA-Z0-9_\\-.]+)\\.([a-zA-Z]{2,5})$".toRegex()
         if (email.isNullOrBlank()) {
             _uiState.update {
-                it.copy(emailAlert = "Please enter email address", isEmailOk = false)
+                it.copy(emailAlert = "Please enter email address")
             }
         } else if (!regex.matches(email)) {
             _uiState.update {
@@ -97,7 +97,7 @@ class LoginViewModel @Inject constructor(
             }
         } else {
             _uiState.update {
-                it.copy(emailAlert = null, isEmailOk = true, email = email)
+                it.copy(emailAlert = null, email = email)
             }
         }
     }
@@ -105,17 +105,17 @@ class LoginViewModel @Inject constructor(
     fun validatePassword(password: String?) {
         if (password.isNullOrBlank()) {
             _uiState.update {
-                it.copy(passwordAlert = "Please enter password", isPasswordOk = false)
+                it.copy(passwordAlert = "Please enter password")
             }
         }
         else if (password.length < 8) {
             _uiState.update {
-                it.copy(passwordAlert = "Password must be 8 or more characters long", isPasswordOk = false)
+                it.copy(passwordAlert = "Password must be 8 or more characters long")
             }
         }
         else {
             _uiState.update {
-                it.copy(passwordAlert = null, isPasswordOk = true, password = password)
+                it.copy(passwordAlert = null, password = password)
             }
         }
     }

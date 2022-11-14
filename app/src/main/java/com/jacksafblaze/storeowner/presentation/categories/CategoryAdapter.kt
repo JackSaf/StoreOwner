@@ -10,8 +10,9 @@ import com.jacksafblaze.storeowner.databinding.CategoryListItemLayoutBinding
 import com.jacksafblaze.storeowner.domain.model.Category
 
 
-class CategoryAdapter: RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder>() {
-    private val callback = object : DiffUtil.ItemCallback<Category>(){
+class CategoryAdapter(private val onItemClickListener: (String, String) -> Unit) :
+    RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder>() {
+    private val callback = object : DiffUtil.ItemCallback<Category>() {
         override fun areItemsTheSame(oldItem: Category, newItem: Category): Boolean {
             return oldItem.id == newItem.id
         }
@@ -36,12 +37,16 @@ class CategoryAdapter: RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder>(
         return differ.currentList.size
     }
 
-    fun setList(list: List<Category>){
+    fun setList(list: List<Category>) {
         differ.submitList(list)
     }
 
-    inner class CategoryViewHolder(private val binding: CategoryListItemLayoutBinding): RecyclerView.ViewHolder(binding.root){
-        fun bind(category: Category){
+    inner class CategoryViewHolder(private val binding: CategoryListItemLayoutBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        fun bind(category: Category) {
+            binding.categoryCardView.setOnClickListener{
+                onItemClickListener.invoke(category.id, category.name)
+            }
             binding.name.text = category.name
             Glide.with(binding.root).load(category.imageUri).into(binding.image)
         }
